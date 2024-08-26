@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,9 @@ public class ProductsMng {
     public ProductsMng(ProductsRepo productsRepo) {
         this.productsRepo = productsRepo;
     }
-
+    public List<Products> productsToList(){
+        return productsRepo.findAll();
+    }
     public Iterable<Products> findAll(){
         return productsRepo.findAll();
     }

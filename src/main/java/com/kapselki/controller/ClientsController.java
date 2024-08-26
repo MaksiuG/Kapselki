@@ -34,7 +34,7 @@ public class ClientsController {
         this.clientsMng = clientsMng;
     }
     //Works fine, for now
-    @GetMapping("/findAll")
+    @GetMapping("/findAllClients")
     public List<ClientsDTO> findAll(){
         List<Clients> list = clientsMng.clientsToList();
         return list
@@ -42,7 +42,6 @@ public class ClientsController {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-
     @PostMapping("/addClient")
     public ResponseEntity<Clients> addClient(@Validated @RequestBody ClientsDTO clientsDTO){
             logger.info("Creating Client with ID " + clientsDTO.getName());
@@ -55,18 +54,12 @@ public class ClientsController {
                 e.getMessage();
                 return ResponseEntity.internalServerError().build();
             }
-
-
     }
     @GetMapping("/findClientByID/{id}")
     public Clients findClientByID(@PathVariable Long id){
         logger.info("Searching Client by ID "+ id);
-
-
             Optional<Clients> client = clientsMng.findClientByID(id);
-
             return client.orElseThrow(() -> new ClientNotFoundException(id));
-
     }
     private ClientsDTO convertToDTO(Clients clients){
         return mapp.modelMapper().map(clients,ClientsDTO.class);
