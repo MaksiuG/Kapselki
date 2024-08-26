@@ -1,6 +1,8 @@
 package com.kapselki.menage;
 
+import com.kapselki.Configuration.Mapp;
 import com.kapselki.model.Clients;
+import com.kapselki.model.DTO.ClientsDTO;
 import com.kapselki.model.repo.ClientsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,34 +24,26 @@ public class ClientsMng {
     public ClientsMng(ClientsRepo clientsRepo) {
         this.clientsRepo = clientsRepo;
     }
-
     public List<Clients> clientsToList(){
         return clientsRepo.findAll();
     }
     public Iterable<Clients> findAll(){
         return clientsRepo.findAll();
     }
-
     public Optional<Clients> findClientByID(@RequestParam Long id){
         return clientsRepo.findById(id);
     }
-
     public Clients add(@RequestBody  Clients clients){
         return clientsRepo.saveAndFlush(clients);
     }
-
     public Clients addPatch(Clients clients){
         return clientsRepo.save(clients);
     }
-
     public void delete(Long id){
         clientsRepo.deleteById(id);
     }
-
     public Page<Clients> getAllClientsPage(int pageNumber, int pageSize){
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
         return clientsRepo.findAll(pageable);
     }
-
-
 }

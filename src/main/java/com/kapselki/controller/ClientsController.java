@@ -1,6 +1,8 @@
 package com.kapselki.controller;
 
 import com.kapselki.Configuration.Mapp;
+import com.kapselki.Exceptions.ClientNotFoundException;
+import com.kapselki.Exceptions.CreatingClientException;
 import com.kapselki.menage.ClientsMng;
 import com.kapselki.model.Clients;
 import com.kapselki.model.DTO.ClientsDTO;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -39,14 +42,30 @@ public class ClientsController {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-    //Some problems with NULL's
+
     @PostMapping("/addClient")
     public ResponseEntity<Clients> addClient(@Validated @RequestBody ClientsDTO clientsDTO){
             logger.info("Creating Client with ID " + clientsDTO.getName());
+            try {
+                Clients clients = convertToEntity(clientsDTO);
+                clientsMng.add(clients);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            }
+            catch(CreatingClientException e){
+                e.getMessage();
+                return ResponseEntity.internalServerError().build();
+            }
 
-            Clients clients =convertToEntity(clientsDTO);
-            clientsMng.add(clients);
-            return ResponseEntity.status(HttpStatus.CREATED).body(clients);
+
+    }
+    @GetMapping("/findClientByID/{id}")
+    public Clients findClientByID(@PathVariable Long id){
+        logger.info("Searching Client by ID "+ id);
+
+
+            Optional<Clients> client = clientsMng.findClientByID(id);
+
+            return client.orElseThrow(() -> new ClientNotFoundException(id));
 
     }
     private ClientsDTO convertToDTO(Clients clients){
