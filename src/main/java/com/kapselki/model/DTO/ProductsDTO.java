@@ -1,42 +1,47 @@
 package com.kapselki.model.DTO;
 
+import com.kapselki.model.Clients;
 import jakarta.persistence.Column;
 
-public class ProductsDTO {
-    private String napis;
-    private boolean czy_zrobione;
-    private Long id_klienta;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-    public ProductsDTO(String napis, boolean czy_zrobione, Long id_klienta) {
-        this.napis = napis;
-        this.czy_zrobione = czy_zrobione;
-        this.id_klienta = id_klienta;
+public class ProductsDTO {
+    private String text;
+    private boolean is_done;
+    private Clients clients;
+
+
+    public ProductsDTO(String text, boolean is_done, Clients clients) {
+        this.text = text;
+        this.is_done = is_done;
+        this.clients = clients;
+    }
+
+    public Clients getClients() {
+        return clients;
+    }
+
+    public void setClients(Clients clients) {
+        this.clients = clients;
     }
 
     public ProductsDTO() {
     }
 
-    public String getNapis() {
-        return napis;
+    public String getText() {
+        return text;
     }
 
-    public void setNapis(String napis) {
-        this.napis = napis;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public boolean isCzy_zrobione() {
-        return czy_zrobione;
+    public boolean isIs_done() {
+        return is_done;
     }
 
-    public void setCzy_zrobione(boolean czy_zrobione) {
-        this.czy_zrobione = czy_zrobione;
-    }
-
-    public Long getId_klienta() {
-        return id_klienta;
-    }
-
-    public void setId_klienta(Long id_klienta) {
-        this.id_klienta = id_klienta;
+    public void setIs_done(boolean is_done) {
+        this.is_done = is_done;
     }
 }

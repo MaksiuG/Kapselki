@@ -1,5 +1,6 @@
 package com.kapselki.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Table
@@ -11,11 +12,23 @@ public class Products {
     private Long id_product;
 
     @Column(name = "text")
-    private String napis;
+    private String text;
     @Column(name = "is_done")
-    private boolean czy_zrobione;
-    @Column(name = "id_client")
-    private Long id_klienta;
+    private boolean is_done;
+
+    @ManyToOne
+    @JsonBackReference
+    private Clients client;
+
+    public Products() {
+    }
+
+    public Products(Long id_product, String text, boolean is_done, Clients client) {
+        this.id_product = id_product;
+        this.text = text;
+        this.is_done = is_done;
+        this.client = client;
+    }
 
     public Long getId_product() {
         return id_product;
@@ -25,27 +38,28 @@ public class Products {
         this.id_product = id_product;
     }
 
-    public String getNapis() {
-        return napis;
+    public boolean isIs_done() {
+        return is_done;
     }
 
-    public void setNapis(String napis) {
-        this.napis = napis;
+    public void setIs_done(boolean is_done) {
+        this.is_done = is_done;
     }
 
-    public boolean isCzy_zrobione() {
-        return czy_zrobione;
+    public String getText() {
+        return text;
     }
 
-    public void setCzy_zrobione(boolean czy_zrobione) {
-        this.czy_zrobione = czy_zrobione;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public Long getId_klienta() {
-        return id_klienta;
+    public Clients getClient() {
+        return client;
     }
 
-    public void setId_klienta(Long id_klienta) {
-        this.id_klienta = id_klienta;
+    public void setClient(Clients client) {
+        this.client = client;
     }
+
 }

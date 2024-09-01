@@ -38,7 +38,7 @@ public class ProductsController {
     }
     @PostMapping("/addProduct")
     public ResponseEntity<Products> addProduct(@Validated @RequestBody ProductsDTO productsDTO){
-        logger.info("Creating Product with Client's ID " + productsDTO.getId_klienta());
+        logger.info("Creating Product with Client's ID " + productsDTO.getClients());
         try {
             Products products = convertToEntity(productsDTO);
             productsMng.add(products);

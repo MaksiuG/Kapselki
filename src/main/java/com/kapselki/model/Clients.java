@@ -1,7 +1,10 @@
 package com.kapselki.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Table
 @Entity(name = "clients")
@@ -31,6 +34,11 @@ public class Clients {
 
     @Column(name = "e_mail")
     private String e_mail;
+
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<Products> products;
 
     public Long getClient_id() {
         return client_id;
@@ -62,5 +70,13 @@ public class Clients {
 
     public void setE_mail(String e_mail) {
         this.e_mail = e_mail;
+    }
+
+    public Set<Products> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Products> products) {
+        this.products = products;
     }
 }

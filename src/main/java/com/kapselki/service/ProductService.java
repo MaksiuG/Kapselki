@@ -1,34 +1,34 @@
 package com.kapselki.service;
 
-import com.kapselki.Configuration.Mapp;
 import com.kapselki.menage.ClientsMng;
+import com.kapselki.menage.ProductsMng;
 import com.kapselki.model.Clients;
 import com.kapselki.model.DTO.ClientsDTO;
+import com.kapselki.model.Products;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClientsService {
+public class ProductService {
+    private ProductsMng productsMng;
     private ClientsMng clientsMng;
-    private Mapp mapp;
-@Autowired
-    public ClientsService(ClientsMng clientsMng, Mapp mapp) {
-        this.clientsMng = clientsMng;
-        this.mapp = mapp;
-    }
 
+    @Autowired
+    public ProductService(ProductsMng productsMng, ClientsMng clientsMng) {
+        this.productsMng = productsMng;
+        this.clientsMng = clientsMng;
+    }
     @EventListener(ApplicationReadyEvent.class)
     public void add(){
-    String imie = "XD";
-    String nazwisko = "XD";
-    String email = "XD";
-
-        ClientsDTO clientsDTO = new ClientsDTO(12345L,imie,nazwisko,email);
-        Clients clients = mapp.modelMapper().map(clientsDTO,Clients.class);
-
+        String text = "XD";
+        boolean isdone = true;
+        Clients clients = new Clients(2L,"jeb","blyat","jebac");
         clientsMng.add(clients);
+
+        productsMng.add(new Products(1L,text,isdone,clients));
     }
+
+
 }
