@@ -1,8 +1,11 @@
 package com.kapselki.controller;
 import com.kapselki.Configuration.Mapp;
+import com.kapselki.Exceptions.ClientNotFoundException;
 import com.kapselki.Exceptions.CreatingClientException;
 import com.kapselki.Exceptions.ProductNotFoundException;
+import com.kapselki.menage.ClientsMng;
 import com.kapselki.menage.ProductsMng;
+import com.kapselki.model.Clients;
 import com.kapselki.model.DTO.ProductsDTO;
 import com.kapselki.model.Products;
 import org.slf4j.Logger;
@@ -21,12 +24,14 @@ import java.util.stream.Collectors;
 public class ProductsController {
     private ProductsMng productsMng;
     private Mapp mapp;
+    private ClientsMng clientsMng;
     private Logger logger = LoggerFactory.getLogger(LoggerFactory.class);
 
     @Autowired
-    public ProductsController(ProductsMng productsMng, Mapp mapp) {
+    public ProductsController(ProductsMng productsMng, Mapp mapp, ClientsMng clientsMng) {
         this.productsMng = productsMng;
         this.mapp = mapp;
+        this.clientsMng = clientsMng;
     }
     @GetMapping("/findAllProducts")
     public List<ProductsDTO> findAll(){
@@ -38,8 +43,13 @@ public class ProductsController {
     }
     @PostMapping("/addProduct")
     public ResponseEntity<Products> addProduct(@Validated @RequestBody ProductsDTO productsDTO){
-        logger.info("Creating Product with Client's ID " + productsDTO.getClients());
+        logger.info("Creating Product with Client's ID " + productsDTO.getClient().getClient_id());
         try {
+
+            Clients clients = clientsMng.findClientByID(productsDTO.getClient().getClient_id())
+                    .orElseThrow(() -> new ClientNotFoundException(404L));
+
+            productsDTO.setClients(clients);
             Products products = convertToEntity(productsDTO);
             productsMng.add(products);
             return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -53,7 +63,7 @@ public class ProductsController {
     public Products findProductByID(@PathVariable Long id){
         logger.info("Searching product by ID "+ id);
 
-        Optional<Products> products = productsMng.findClientByID(id);
+        Optional<Products> products = productsMng.findProductByID(id);
 
         return products.orElseThrow(
                 () -> new ProductNotFoundException(id)

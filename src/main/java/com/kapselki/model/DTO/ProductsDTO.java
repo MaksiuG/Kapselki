@@ -9,21 +9,21 @@ import java.util.stream.Collectors;
 public class ProductsDTO {
     private String text;
     private boolean is_done;
-    private Clients clients;
+    private Clients client;
 
 
-    public ProductsDTO(String text, boolean is_done, Clients clients) {
+    public ProductsDTO(String text, boolean is_done, Clients client) {
         this.text = text;
         this.is_done = is_done;
-        this.clients = clients;
+        this.client = client;
     }
 
-    public Clients getClients() {
-        return clients;
+    public Clients getClient() {
+        return client;
     }
 
     public void setClients(Clients clients) {
-        this.clients = clients;
+        this.client = clients;
     }
 
     public ProductsDTO() {

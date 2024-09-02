@@ -28,7 +28,7 @@ public class ProductsMng {
         return productsRepo.findAll();
     }
 
-    public Optional<Products> findClientByID(@RequestParam Long id){
+    public Optional<Products> findProductByID(@RequestParam Long id){
         return productsRepo.findById(id);
     }
 

@@ -29,6 +29,4 @@ public class ProductService {
 
         productsMng.add(new Products(1L,text,isdone,clients));
     }
-
-
 }
