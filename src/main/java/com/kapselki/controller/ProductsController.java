@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("api/products")
 public class ProductsController {
     private ProductsMng productsMng;
     private Mapp mapp;
@@ -47,7 +47,7 @@ public class ProductsController {
         try {
 
             Clients clients = clientsMng.findClientByID(productsDTO.getClient().getClient_id())
-                    .orElseThrow(() -> new ClientNotFoundException(404L));
+                    .orElseThrow(() -> new ProductNotFoundException(productsDTO.getProduct_id()));
 
             productsDTO.setClients(clients);
             Products products = convertToEntity(productsDTO);

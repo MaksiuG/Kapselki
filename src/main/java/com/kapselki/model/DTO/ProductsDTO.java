@@ -7,12 +7,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProductsDTO {
+    private Long product_id;
     private String text;
     private boolean is_done;
     private Clients client;
 
 
-    public ProductsDTO(String text, boolean is_done, Clients client) {
+    public ProductsDTO(Long product_id, String text, boolean is_done, Clients client) {
+        this.product_id = product_id;
         this.text = text;
         this.is_done = is_done;
         this.client = client;
@@ -43,5 +45,13 @@ public class ProductsDTO {
 
     public void setIs_done(boolean is_done) {
         this.is_done = is_done;
+    }
+
+    public Long getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(Long product_id) {
+        this.product_id = product_id;
     }
 }

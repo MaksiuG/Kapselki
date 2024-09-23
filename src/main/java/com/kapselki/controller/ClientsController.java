@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("api/clients")
 @Validated
 public class ClientsController {
     private Logger logger = LoggerFactory.getLogger(LoggerFactory.class);
